@@ -1,13 +1,16 @@
 //! Emulation Zicfiss (Shadow Stack)
 //! Ref: [https://github.com/riscv/riscv-cfi/releases/download/v1.0/riscv-cfi.pdf](https://github.com/riscv/riscv-cfi/releases/download/v1.0/riscv-cfi.pdf)
 
-use super::pseudo_vs_exception;
-use crate::memmap::{
+#![no_std]
+// TODO: FIX AND REMOVE IT!!!
+#![allow(static_mut_refs)]
+
+use hikami::emulate_extension::{pseudo_vs_exception, EmulateExtension, EmulatedCsr};
+use hikami::memmap::{
     page_table::{g_stage_trans_addr, vs_stage_trans_addr},
     GuestVirtualAddress,
 };
-use crate::HYPERVISOR_DATA;
-use hikami::{EmulateExtension, EmulatedCsr};
+use hikami::HYPERVISOR_DATA;
 
 use core::cell::OnceCell;
 use raki::{Instruction, OpcodeKind, ZicfissOpcode, ZicsrOpcode};
